@@ -1,0 +1,6 @@
+<h2>Edit audio file</h2>
+
+<%= render "form.html", changeset: @changeset,
+                        action: audio_file_path(@conn, :update, @audio_file) %>
+
+<%= link "Back", to: audio_file_path(@conn, :index) %>

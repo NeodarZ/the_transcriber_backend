@@ -1,0 +1,23 @@
+<h2>Show audio file</h2>
+
+<ul>
+
+  <li>
+    <strong>Audio path:</strong>
+    <%= @audio_file.audio_path %>
+  </li>
+
+  <li>
+    <strong>Transcription file path:</strong>
+    <%= @audio_file.transcription_file_path %>
+  </li>
+
+  <li>
+    <strong>Audio duration:</strong>
+    <%= @audio_file.audio_duration %>
+  </li>
+
+</ul>
+
+<%= link "Edit", to: audio_file_path(@conn, :edit, @audio_file) %>
+<%= link "Back", to: audio_file_path(@conn, :index) %>
