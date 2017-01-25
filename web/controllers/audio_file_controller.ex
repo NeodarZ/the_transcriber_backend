@@ -20,7 +20,8 @@ defmodule TheTranscriberBackend.AudioFileController do
       File.cp(upload.path, path)
     end
     changeset = AudioFile.changeset(%AudioFile{}, audio_file_params)
-    Ecto.Changeset.put_change(changeset, :audio_path, path)
+                |> Ecto.Changeset.put_change(:audio_path, path)
+    IO.inspect changeset 
 
     case Repo.insert(changeset) do
       {:ok, _audio_file} ->
