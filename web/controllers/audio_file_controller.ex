@@ -19,8 +19,13 @@ defmodule TheTranscriberBackend.AudioFileController do
       path = "/media/phoenix_test/#{upload.filename}"
       File.cp(upload.path, path)
     end
-    changeset = AudioFile.changeset(%AudioFile{}, audio_file_params)
-                |> Ecto.Changeset.put_change(:audio_path, path)
+
+    # "Non-elixir" way of doing things
+    changeset = AudioFile.changeset(%AudioFile{}, 
+      %{audio_path: path,
+        transcription_file_path: audio_file_params["transcription_file_path"],
+        audio_duration: audio_file_params["audio_duration"]})
+
     IO.inspect changeset 
 
     case Repo.insert(changeset) do
