@@ -18,13 +18,12 @@ defmodule TheTranscriberBackend.AudioFileController do
     path = "/media/phoenix_test/#{upload.filename}"
     File.cp(upload.path, path)
 
-    # "Non-elixir" way of doing things
-    changeset = AudioFile.changeset(%AudioFile{}, 
+    changeset = AudioFile.changeset(%AudioFile{},
       %{audio_path: path,
         transcription_file_path: transcription_file_path,
         audio_duration: audio_duration})
 
-    IO.inspect changeset 
+    IO.inspect changeset
 
     case Repo.insert(changeset) do
       {:ok, _audio_file} ->
@@ -38,10 +37,10 @@ defmodule TheTranscriberBackend.AudioFileController do
 
 
 
-  def create(conn, %{"audio_file" => %{"audio_duration" => audio_duration, "transcription_file_path" => transcription_file_path}}) do
-
-    ## Do something here if no file has been uploaded
-  end
+#  def create(conn, %{"audio_file" => %{"audio_duration" => audio_duration, "transcription_file_path" => transcription_file_path}}) do
+#
+#    ## Do something here if no file has been uploaded
+#  end
 
   def show(conn, %{"id" => id}) do
     audio_file = Repo.get!(AudioFile, id)
@@ -54,9 +53,18 @@ defmodule TheTranscriberBackend.AudioFileController do
     render(conn, "edit.html", audio_file: audio_file, changeset: changeset)
   end
 
-  def update(conn, %{"id" => id, "audio_file" => audio_file_params}) do
+  def update(conn, %{"id" => id, "audio_file" => %{"audio_duration" => audio_duration, "audio_path" => upload, "transcription_file_path" => transcription_file_path}}) do
+
+    path = "/media/phoenix_test/#{upload.filename}"
+    File.cp(upload.path, path)
+
     audio_file = Repo.get!(AudioFile, id)
-    changeset = AudioFile.changeset(audio_file, audio_file_params)
+    #changeset = AudioFile.changeset(audio_file, audio_file_params)
+
+    changeset = AudioFile.changeset(audio_file,
+      %{audio_path: path,
+        transcription_file_path: transcription_file_path,
+        audio_duration: audio_duration})
 
     case Repo.update(changeset) do
       {:ok, audio_file} ->
