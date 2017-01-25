@@ -25,9 +25,10 @@ defmodule TheTranscriberBackend.Endpoint do
   plug Plug.Logger
 
   plug Plug.Parsers,
-    parsers: [:urlencoded, :multipart, :json],
+    parsers: [:urlencoded, :multipart, :json, :length],
     pass: ["*/*"],
-    json_decoder: Poison
+    json_decoder: Poison,
+    length: 80_000_000
 
   plug Plug.MethodOverride
   plug Plug.Head

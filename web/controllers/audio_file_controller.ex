@@ -14,12 +14,18 @@ defmodule TheTranscriberBackend.AudioFileController do
   end
 
   def create(conn, %{"audio_file" => audio_file_params}) do
+    if upload = audio_file_params["audio_path"] do
+      extension = Path.extname(upload.filename)
+      path = "/media/phoenix_test/#{upload.filename}"
+      File.cp(upload.path, path)
+    end
     changeset = AudioFile.changeset(%AudioFile{}, audio_file_params)
+    Ecto.Changeset.put_change(changeset, :audio_path, path)
 
     case Repo.insert(changeset) do
       {:ok, _audio_file} ->
         conn
-        |> put_flash(:info, "Audio file created successfully.")
+        |> put_flash(:info, "Audio file uploaded successfully.")
         |> redirect(to: audio_file_path(conn, :index))
       {:error, changeset} ->
         render(conn, "new.html", changeset: changeset)
@@ -56,6 +62,7 @@ defmodule TheTranscriberBackend.AudioFileController do
 
     # Here we use delete! (with a bang) because we expect
     # it to always work (and if it does not, it will raise).
+    File.rm(audio_file.audio_path)
     Repo.delete!(audio_file)
 
     conn
