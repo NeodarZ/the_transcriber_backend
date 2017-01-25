@@ -13,18 +13,16 @@ defmodule TheTranscriberBackend.AudioFileController do
     render(conn, "new.html", changeset: changeset)
   end
 
-  def create(conn, %{"audio_file" => audio_file_params}) do
-    if upload = audio_file_params["audio_path"] do
-      extension = Path.extname(upload.filename)
-      path = "/media/phoenix_test/#{upload.filename}"
-      File.cp(upload.path, path)
-    end
+  def create(conn, %{"audio_file" => %{"audio_duration" => audio_duration, "audio_path" => upload, "transcription_file_path" => transcription_file_path}}) do
+
+    path = "/media/phoenix_test/#{upload.filename}"
+    File.cp(upload.path, path)
 
     # "Non-elixir" way of doing things
     changeset = AudioFile.changeset(%AudioFile{}, 
       %{audio_path: path,
-        transcription_file_path: audio_file_params["transcription_file_path"],
-        audio_duration: audio_file_params["audio_duration"]})
+        transcription_file_path: transcription_file_path,
+        audio_duration: audio_duration})
 
     IO.inspect changeset 
 
@@ -36,6 +34,13 @@ defmodule TheTranscriberBackend.AudioFileController do
       {:error, changeset} ->
         render(conn, "new.html", changeset: changeset)
     end
+  end
+
+
+
+  def create(conn, %{"audio_file" => %{"audio_duration" => audio_duration, "transcription_file_path" => transcription_file_path}}) do
+
+    ## Do something here if no file has been uploaded
   end
 
   def show(conn, %{"id" => id}) do
