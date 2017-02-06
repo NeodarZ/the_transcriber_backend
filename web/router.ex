@@ -5,7 +5,7 @@ defmodule TheTranscriberBackend.Router do
     plug :accepts, ["html"]
     plug :fetch_session
     plug :fetch_flash
-    plug :protect_from_forgery
+    #plug :protect_from_forgery
     plug :put_secure_browser_headers
   end
 
@@ -18,10 +18,15 @@ defmodule TheTranscriberBackend.Router do
 
     get "/", PageController, :index
     resources "/audio_file", AudioFileController
+
+    post "/", PageController, :index
+    resources "/audio_file", AudioFileController
   end
 
   # Other scopes may use custom stacks.
-  # scope "/api", TheTranscriberBackend do
-  #   pipe_through :api
-  # end
+  scope "/api", TheTranscriberBackend do
+    pipe_through :api
+
+    resources "/audio_file", AudioFileAPIController
+  end
 end

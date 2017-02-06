@@ -23,8 +23,6 @@ defmodule TheTranscriberBackend.AudioFileController do
         transcription_file_path: transcription_file_path,
         audio_duration: audio_duration})
 
-    IO.inspect changeset
-
     case Repo.insert(changeset) do
       {:ok, _audio_file} ->
         conn
