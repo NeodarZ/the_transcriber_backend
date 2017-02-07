@@ -18,3 +18,8 @@ Ready to run in production? Please [check our deployment guides](http://www.phoe
   * Docs: https://hexdocs.pm/phoenix
   * Mailing list: http://groups.google.com/group/phoenix-talk
   * Source: https://github.com/phoenixframework/phoenix
+
+## Usage of the api:
+
+For upload a file:
+`curl --form "audio_file[audio_path]=@yolo" --form "audio_file[transcription_file_path]=ooooo" --form "audio_file[audio_duration]=blabla"  http://127.0.0.1:4000/api/audio_file`
