@@ -6,7 +6,7 @@ defmodule TheTranscriberBackend.AudioFileAPI do
 
   schema "audio_file" do
     field :audio_path, :string
-    field :transcription_file_path, :string
+    field :audio_name, :string
     field :audio_duration, :string
 
     timestamps()

@@ -14,7 +14,7 @@
 <%= for audio_file <- @audio_file do %>
     <tr>
       <td><%= audio_file.audio_path %></td>
-      <td><%= audio_file.transcription_file_path %></td>
+      <td><%= audio_file.audio_name %></td>
       <td><%= audio_file.audio_duration %></td>
 
       <td class="text-right">

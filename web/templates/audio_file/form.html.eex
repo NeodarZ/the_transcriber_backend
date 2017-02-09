@@ -12,9 +12,9 @@
   </div>
 
   <div class="form-group">
-    <%= label f, :transcription_file_path, class: "control-label" %>
-    <%= text_input f, :transcription_file_path, class: "form-control" %>
-    <%= error_tag f, :transcription_file_path %>
+    <%= label f, :audio_name, class: "control-label" %>
+    <%= text_input f, :audio_name, class: "form-control" %>
+    <%= error_tag f, :audio_name %>
   </div>
 
   <div class="form-group">

@@ -4,7 +4,7 @@ defmodule TheTranscriberBackend.Repo.Migrations.CreateAudioFile do
   def change do
     create table(:audio_file) do
       add :audio_path, :string
-      add :transcription_file_path, :string
+      add :audio_name, :string
       add :audio_duration, :string
 
       timestamps()

@@ -14,7 +14,7 @@ defmodule TheTranscriberBackend.AudioFileAPIView do
   def render("audio_file_api.json", %{audio_file_api: audio_file_api}) do
     %{id: audio_file_api.id,
       audio_path: audio_file_api.audio_path,
-      audio_transcription_file_path: audio_file_api.transcription_file_path,
+      audio_name: audio_file_api.audio_name,
       audio_duration: audio_file_api.audio_duration}
   end
 end

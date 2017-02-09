@@ -2,7 +2,7 @@ defmodule TheTranscriberBackend.AudioFileControllerTest do
   use TheTranscriberBackend.ConnCase
 
   alias TheTranscriberBackend.AudioFile
-  @valid_attrs %{audio_duration: "some content", audio_path: "some content", transcription_file_path: "some content"}
+  @valid_attrs %{audio_duration: "some content", audio_path: "some content", audio_name: "some content"}
   @invalid_attrs %{}
 
   test "lists all entries on index", %{conn: conn} do

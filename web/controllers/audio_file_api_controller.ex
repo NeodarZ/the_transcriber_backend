@@ -9,7 +9,7 @@ defmodule TheTranscriberBackend.AudioFileAPIController do
     render(conn, "index.json", audio_file_api: audio_file_api)
   end
 
-  def create(conn, %{"audio_file" => %{"audio_duration" => audio_duration, "audio_path" => upload, "transcription_file_path" => transcription_file_path}}) do
+  def create(conn, %{"audio_file" => %{"audio_duration" => audio_duration, "audio_path" => upload, "audio_name" => audio_name}}) do
 
     repo_last_id = (Repo.one(from x in AudioFileAPI, order_by: [desc: x.id], limit: 1)).id
 
@@ -18,7 +18,7 @@ defmodule TheTranscriberBackend.AudioFileAPIController do
 
     changeset = AudioFile.changeset(%AudioFile{},
       %{audio_path: path,
-        transcription_file_path: transcription_file_path,
+        audio_name: audio_name,
         audio_duration: audio_duration})
 
           IO.inspect path

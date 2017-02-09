@@ -13,14 +13,22 @@ defmodule TheTranscriberBackend.AudioFileController do
     render(conn, "new.html", changeset: changeset)
   end
 
-  def create(conn, %{"audio_file" => %{"audio_duration" => audio_duration, "audio_path" => upload, "transcription_file_path" => transcription_file_path}}) do
+  def create(conn, %{"audio_file" => %{"audio_duration" => audio_duration, "audio_path" => upload, "audio_name" => audio_name}}) do
 
-    path = "/media/phoenix_test/#{upload.filename}"
+    repo_last_id = Repo.one(from x in AudioFile, order_by: [desc: x.id], limit: 1)
+
+    #query = "select nextval('audio_file_id_seq')"
+
+    #result = Ecto.Adapters.SQL.query!(Repo, query, [])
+
+    #[[repo_last_id]] = result.rows # A beautiful pattern match :)
+
+    path = "/media/phoenix_test/#{repo_last_id}_#{upload.filename}"
     File.cp(upload.path, path)
 
     changeset = AudioFile.changeset(%AudioFile{},
       %{audio_path: path,
-        transcription_file_path: transcription_file_path,
+        audio_name: audio_name,
         audio_duration: audio_duration})
 
     case Repo.insert(changeset) do
@@ -35,7 +43,7 @@ defmodule TheTranscriberBackend.AudioFileController do
 
 
 
-#  def create(conn, %{"audio_file" => %{"audio_duration" => audio_duration, "transcription_file_path" => transcription_file_path}}) do
+#  def create(conn, %{"audio_file" => %{"audio_duration" => audio_duration, "audio_name" => audio_name}}) do
 #
 #    ## Do something here if no file has been uploaded
 #  end
@@ -51,9 +59,10 @@ defmodule TheTranscriberBackend.AudioFileController do
     render(conn, "edit.html", audio_file: audio_file, changeset: changeset)
   end
 
-  def update(conn, %{"id" => id, "audio_file" => %{"audio_duration" => audio_duration, "audio_path" => upload, "transcription_file_path" => transcription_file_path}}) do
+  def update(conn, %{"id" => id, "audio_file" => %{"audio_duration" => audio_duration, "audio_path" => upload, "audio_name" => audio_name}}) do
 
-    path = "/media/phoenix_test/#{upload.filename}"
+    path = "/media/phoenix_test/#{id}_#{upload.filename}"
+
     File.cp(upload.path, path)
 
     audio_file = Repo.get!(AudioFile, id)
@@ -61,7 +70,7 @@ defmodule TheTranscriberBackend.AudioFileController do
 
     changeset = AudioFile.changeset(audio_file,
       %{audio_path: path,
-        transcription_file_path: transcription_file_path,
+        audio_name: audio_name,
         audio_duration: audio_duration})
 
     case Repo.update(changeset) do
