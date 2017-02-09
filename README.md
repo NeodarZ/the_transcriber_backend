@@ -23,8 +23,8 @@ Ready to run in production? Please [check our deployment guides](http://www.phoe
 
 To upload a file:
 
-`curl --form "audio_file[audio_path]=@RapportAssemblee.mp4" --form "audio_file[transcription_file_path]=RappooortAssemblee.mp4" --form "audio_file[audio_duration]=00:00"  http://127.0.0.1:4000/api/audio_file`
+`curl --form "audio_file[audio_path]=@RapportAssemblee.mp4" --form "audio_file[audio_name]=RappooortAssemblee.mp4" --form "audio_file[audio_duration]=00:00"  http://127.0.0.1:4000/api/audio_file`
 
 To update a file:
 
-`curl --form "audio_file[audio_path]=@RapportAssemblee.mp4" --form "audio_file[transcription_file_path]=RapportAssemblee.mp4" --form "audio_file[audio_duration]=00:00" -X PATCH http://127.0.0.1:4000/audio_file/42`
+`curl --form "audio_file[audio_path]=@RapportAssemblee.mp4" --form "audio_file[audio_name]=RapportAssemblee.mp4" --form "audio_file[audio_duration]=00:00" -X PATCH http://127.0.0.1:4000/audio_file/42`
