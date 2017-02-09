@@ -19,7 +19,7 @@ defmodule TheTranscriberBackend.AudioFileController do
     result = Ecto.Adapters.SQL.query!(Repo, query, [])
     [[repo_last_id]] = result.rows # A beautiful pattern match :)
 
-    path = "/media/phoenix_test/#{repo_last_id}_#{upload.filename}"
+    path = "/media/phoenix_test/#{repo_last_id + 1}_#{upload.filename}"
     File.cp(upload.path, path)
 
     changeset = AudioFile.changeset(%AudioFile{},
