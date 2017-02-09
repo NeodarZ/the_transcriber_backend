@@ -15,13 +15,9 @@ defmodule TheTranscriberBackend.AudioFileController do
 
   def create(conn, %{"audio_file" => %{"audio_duration" => audio_duration, "audio_path" => upload, "audio_name" => audio_name}}) do
 
-    repo_last_id = Repo.one(from x in AudioFile, order_by: [desc: x.id], limit: 1)
-
-    #query = "select nextval('audio_file_id_seq')"
-
-    #result = Ecto.Adapters.SQL.query!(Repo, query, [])
-
-    #[[repo_last_id]] = result.rows # A beautiful pattern match :)
+    query = "select nextval('audio_file_id_seq')"
+    result = Ecto.Adapters.SQL.query!(Repo, query, [])
+    [[repo_last_id]] = result.rows # A beautiful pattern match :)
 
     path = "/media/phoenix_test/#{repo_last_id}_#{upload.filename}"
     File.cp(upload.path, path)
