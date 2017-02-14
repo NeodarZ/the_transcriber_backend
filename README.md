@@ -28,3 +28,5 @@ To upload a file:
 To update a file:
 
 `curl --form "audio_file[audio_path]=@RapportAssemblee.mp4" --form "audio_file[audio_name]=RapportAssemblee.mp4" --form "audio_file[audio_duration]=00:00" -X PATCH http://127.0.0.1:4000/audio_file/42`
+
+You can also view the content of the database with this web page : `http://127.0.0.1:4000/audio_file`
