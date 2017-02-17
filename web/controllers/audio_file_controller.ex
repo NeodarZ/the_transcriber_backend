@@ -22,16 +22,16 @@ defmodule TheTranscriberBackend.AudioFileController do
         audio_duration: audio_duration})
 
     case Repo.insert(changeset) do
-      {:ok, audio_file_api} ->
-        File.cp(upload.path, "#{path}#{audio_file_api.id}_#{upload.filename}")
+      {:ok, audio_file} ->
+        File.cp(upload.path, "#{path}#{audio_file.id}_#{upload.filename}")
         conn
         |> put_status(:created)
-        |> put_resp_header("location", audio_file_api_path(conn, :show, audio_file_api))
-        |> render("show.json", audio_file_api: audio_file_api)
+        |> put_resp_header("location", audio_file_path(conn, :show, audio_file))
+        |> render("show.html", audio_file: audio_file)
       {:error, changeset} ->
         conn
         |> put_status(:unprocessable_entity)
-        |> render(TheTranscriberBackend.ChangesetView, "error.json", changeset: changeset)
+        |> render(TheTranscriberBackend.ChangesetView, "error.html", changeset: changeset)
     end
     end
 
