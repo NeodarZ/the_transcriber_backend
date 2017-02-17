@@ -51,12 +51,20 @@ defmodule TheTranscriberBackend.AudioFileAPIController do
   end
 
   def delete(conn, %{"id" => id}) do
+    path = "/media/phoenix_test/"
     audio_file_api = Repo.get!(AudioFileAPI, id)
+    cond do
+      audio_file_api !=nil ->
+        # Here we use delete! (with a bang) because we expect
+        # it to always work (and if it does not, it will raise).
+        File.rm("#{path}#{audio_file_api.id}_#{audio_file_api.audio_path}")
+        Repo.delete!(audio_file_api)
 
-    # Here we use delete! (with a bang) because we expect
-    # it to always work (and if it does not, it will raise).
-    Repo.delete!(audio_file_api)
-
-    send_resp(conn, :no_content, "")
+        conn
+        |> send_resp(200, "Audio file deleted successfully.")
+      audio_file_api == nil ->
+        conn
+        |> send_resp(404, "File not found in database !")
+    end
   end
 end
