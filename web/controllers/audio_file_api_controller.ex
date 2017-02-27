@@ -9,7 +9,7 @@ defmodule TheTranscriberBackend.AudioFileAPIController do
     render(conn, "index.json", audio_file_api: audio_file_api)
   end
 
-  def create(conn, %{"audio_file" => %{"audio_duration" => audio_duration, "audio_path" => upload, "audio_name" => audio_name}}) do
+  def create(conn, %{"audio_file" => %{"audio_path" => upload, "audio_name" => audio_name}}) do
     path = "/media/phoenix_test/"
 
     changeset = AudioFile.changeset(%AudioFile{},
