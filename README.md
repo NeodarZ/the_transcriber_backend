@@ -24,15 +24,11 @@ Ready to run in production? Please
 
 To upload a file:
 
-`curl --form "audio_file[audio_path]=@RapportAssemblee.mp4" --form
-"audio_file[audio_name]=Rapport vidéo de l'assemblée" --form
-"audio_file[audio_duration]=03:20"  http://127.0.0.1:4000/api/audio_file`
+`curl --form "audio_file[audio_path]=@RapportAssemblee.mp4" --form "audio_file[audio_name]=Rapport vidéo de l'assemblée" --form "audio_file[audio_duration]=03:20"  http://127.0.0.1:4000/api/audio_file`
 
 To update a file:
 
-`curl --form "audio_file[audio_path]=@RapportAssemblee.mp4" --form
-"audio_file[audio_name]=RapportAssemblee.mp4" --form
-"audio_file[audio_duration]=00:00" -X PATCH http://127.0.0.1:4000/audio_file/42`
+`curl --form "audio_file[audio_path]=@RapportAssemblee.mp4" --form "audio_file[audio_name]=RapportAssemblee.mp4" --form "audio_file[audio_duration]=00:00" -X PATCH http://127.0.0.1:4000/audio_file/42`
 
 To delete a file:
 
@@ -42,8 +38,7 @@ You can also view the content of the database with this web page :
 [`localhost:4000/audio_file`](http://127.0.0.1:4000/audio_file)
 
 ## Development:
-If you have an error like : `[debug] ** (Ecto.NoResultsError) expected at least
-one result but got none in query:` when you dev, check the doc :
+If you have an error like : `[debug] ** (Ecto.NoResultsError) expected at least one result but got none in query:` when you dev, check the doc :
 `http://www.phoenixframework.org/v0.14.0/docs/custom-errors`
 
 tl;dr: change this `debug_errors: false` and `catch_errors: true` in
