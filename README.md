@@ -39,7 +39,7 @@ You can also view the content of the database with this web page :
 
 ## Development:
 If you have an error like : `[debug] ** (Ecto.NoResultsError) expected at least one result but got none in query:` when you dev, check the doc :
-`http://www.phoenixframework.org/v0.14.0/docs/custom-errors`
+[`http://www.phoenixframework.org/v0.14.0/docs/custom-errors`](http://www.phoenixframework.org/v0.14.0/docs/custom-errors)
 
 tl;dr: change this `debug_errors: false` and `catch_errors: true` in
 `config/dev.exs`
