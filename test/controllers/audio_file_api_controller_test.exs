@@ -54,7 +54,7 @@ defmodule TheTranscriberBackend.AudioFileAPIControllerTest do
   test "deletes chosen resource", %{conn: conn} do
     audio_file_api = Repo.insert! %AudioFileAPI{}
     conn = delete conn, audio_file_api_path(conn, :delete, audio_file_api)
-    assert response(conn, 204)
+    assert response(conn, 200)
     refute Repo.get(AudioFileAPI, audio_file_api.id)
   end
 end
