@@ -15,11 +15,12 @@ defmodule TheTranscriberBackend.AudioFileAPIController do
     changeset = AudioFile.changeset(%AudioFile{},
       %{audio_path: upload.filename,
         audio_name: audio_name,
-        audio_duration: audio_duration})
+        audio_duration: "#{FFprobe.duration(upload.path)}"})
 
     case Repo.insert(changeset) do
       {:ok, audio_file_api} ->
         File.cp(upload.path, "#{path}#{audio_file_api.id}_#{upload.filename}")
+
         conn
         |> put_status(:created)
         |> put_resp_header("location", audio_file_api_path(conn, :show, audio_file_api))

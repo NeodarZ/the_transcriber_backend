@@ -19,7 +19,7 @@ defmodule TheTranscriberBackend.Mixfile do
   def application do
     [mod: {TheTranscriberBackend, []},
      applications: [:phoenix, :phoenix_pubsub, :phoenix_html, :cowboy, :logger, :gettext,
-                    :phoenix_ecto, :postgrex]]
+                    :phoenix_ecto, :postgrex, :ffmpex]]
   end
 
   # Specifies which paths to compile per environment.
@@ -38,7 +38,8 @@ defmodule TheTranscriberBackend.Mixfile do
      {:phoenix_live_reload, "~> 1.0", only: :dev},
      {:gettext, "~> 0.11"},
      {:cowboy, "~> 1.0"},
-     {:ja_serializer, "~> 0.11.2"}]
+     {:ja_serializer, "~> 0.11.2"},
+     {:ffmpex, "~> 0.4.0"}]
   end
 
   # Aliases are shortcuts or tasks specific to the current project.
