@@ -24,7 +24,7 @@ Ready to run in production? Please
 
 To upload a file:
 
-`curl --form "audio_file[audio_path]=@RapportAssemblee.mp4" --form "audio_file[audio_name]=Rapport vidéo de l'assemblée" --form "audio_file[audio_duration]=03:20"  http://127.0.0.1:4000/api/audio_file`
+`curl --form "audio_file[audio_path]=@RapportAssemblee.mp4" --form "audio_file[audio_name]=Rapport vidéo de l'assemblée"  http://127.0.0.1:4000/api/audio_file`
 
 To update a file:
 
