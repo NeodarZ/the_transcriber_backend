@@ -3,7 +3,12 @@ defmodule TheTranscriberBackend.AudioFileAPITest do
 
   alias TheTranscriberBackend.AudioFileAPI
 
-  @valid_attrs %{}
+  @valid_attrs %{
+    audio_path: "myfile.mp3",
+    audio_name: "MyFile",
+    audio_duration: "00:00"
+
+  }
   @invalid_attrs %{}
 
   test "changeset with valid attributes" do

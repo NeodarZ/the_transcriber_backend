@@ -17,7 +17,7 @@ defmodule TheTranscriberBackend.AudioFileAPI do
   """
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [])
-    |> validate_required([])
+    |> cast(params, [:audio_path, :audio_name, :audio_duration])
+    |> validate_required([:audio_path, :audio_name, :audio_duration])
   end
 end
