@@ -24,6 +24,7 @@ defmodule TheTranscriberBackend.AudioFileController do
     case Repo.insert(changeset) do
       {:ok, audio_file} ->
         File.cp(upload.path, "#{path}#{audio_file.id}_#{upload.filename}")
+        System.cmd "notify-send", ["Yeah ! Your file is uploaded !"]
         conn
         |> put_status(:created)
         |> put_resp_header("location", audio_file_path(conn, :show, audio_file))
@@ -79,7 +80,8 @@ defmodule TheTranscriberBackend.AudioFileController do
 
   def delete(conn, %{"id" => id}) do
     path = "/media/phoenix_test/"
-    audio_file = Repo.get!(AudioFile, id)
+    audio_file = Repo.get(AudioFile, id)
+    quey = from the_audio_file in AudioFile, where: [id: ^id]
     cond do
       audio_file !=nil ->
         # Here we use delete! (with a bang) because we expect
