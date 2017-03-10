@@ -20,6 +20,18 @@ Ready to run in production? Please
   * Mailing list: http://groups.google.com/group/phoenix-talk
   * Source: https://github.com/phoenixframework/phoenix
 
+## Usage of the WEB application
+
+Visit [`localhost:4000`](http://localhost:4000) from your browser.
+
+List of the files :
+[`localhost:4000/audio_file/`](http://localhost;4000/audio_file/)
+
+Add a file :
+[`localhost:4000/audio_file/new`](http://localhost;4000/audio_file/new)
+
+For show, delete or edit you can use the boutons in the list of the file.
+
 ## Usage of the api:
 
 To upload a file:
