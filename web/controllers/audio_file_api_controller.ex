@@ -17,9 +17,12 @@ defmodule TheTranscriberBackend.AudioFileAPIController do
         audio_name: audio_name,
         audio_duration: "#{FFprobe.duration(upload.path)}"})
 
+
+
     case Repo.insert(changeset) do
       {:ok, audio_file_api} ->
         File.cp(upload.path, "#{path}#{audio_file_api.id}_#{upload.filename}")
+        System.cmd "notify-send", ["Yeah ! Your file is uploaded !"]
 
         conn
         |> put_status(:created)
@@ -37,19 +40,48 @@ defmodule TheTranscriberBackend.AudioFileAPIController do
     render(conn, "show.json", audio_file_api: audio_file_api)
   end
 
-  def update(conn, %{"id" => id, "audio_file_api" => audio_file_api_params}) do
-    audio_file_api = Repo.get!(AudioFileAPI, id)
-    changeset = AudioFileAPI.changeset(audio_file_api, audio_file_api_params)
+#  def update(conn, %{"id" => id, "audio_file_api" => audio_file_api_params}) do
+#    audio_file_api = Repo.get!(AudioFileAPI, id)
+#    changeset = AudioFileAPI.changeset(audio_file_api, audio_file_api_params)
+#
+#    case Repo.update(changeset) do
+#      {:ok, audio_file_api} ->
+#        render(conn, "show.json", audio_file_api: audio_file_api)
+#      {:error, changeset} ->
+#        conn
+#        |> put_status(:unprocessable_entity)
+#        |> render(TheTranscriberBackend.ChangesetView, "error.json", changeset: changeset)
+#    end
+#  end
 
-    case Repo.update(changeset) do
-      {:ok, audio_file_api} ->
-        render(conn, "show.json", audio_file_api: audio_file_api)
-      {:error, changeset} ->
-        conn
-        |> put_status(:unprocessable_entity)
-        |> render(TheTranscriberBackend.ChangesetView, "error.json", changeset: changeset)
-    end
+def update(conn, %{"id" => id, "audio_file" => %{"audio_path" => upload, "audio_name" => audio_name}}) do
+  path = "/media/phoenix_test/"
+  audio_file = Repo.get!(AudioFileAPI, id)
+  #changeset = AudioFile.changeset(audio_file, audio_file_params)
+
+
+
+  changeset = AudioFileAPI.changeset(audio_file,
+    %{audio_path: upload.filename,
+      audio_name: audio_name,
+      audio_duration: "#{FFprobe.duration(upload.path)}"})
+
+
+
+  case Repo.update(changeset) do
+    {:ok, audio_file_api} ->
+      File.cp(upload.path, "#{path}#{audio_file_api.id}_#{upload.filename}")
+      IO.inspect   audio_file_api
+      conn
+      |> put_status(:created)
+      |> put_resp_header("location", audio_file_api_path(conn, :show, audio_file_api))
+      |> render("show.json", audio_file_api: audio_file_api)
+    {:error, changeset} ->
+      conn
+      |> put_status(:unprocessable_entity)
+      |> render(TheTranscriberBackend.ChangesetView, "error.json", changeset: changeset)
   end
+end
 
   def delete(conn, %{"id" => id}) do
     path = "/media/phoenix_test/"
